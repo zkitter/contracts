@@ -83,7 +83,7 @@ module.exports = {
             provider: () => new HDWalletProvider(
                 // throw-away seed for dev
                 process.env.PRIVATE_KEY,
-                `https://arbitrum-goerli.infura.io/v3/${process.env.GOERLI_API_KEY}`
+                `https://arbitrum-goerli.infura.io/v3/${process.env.ARB_GOERLI_API_KEY}`
             )
             ,
             network_id: 421613
