@@ -22,7 +22,7 @@ const HDWalletProvider = require('@truffle/hdwallet-provider');
 //
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
-console.log(process.env.PRIVATE_KEY);
+
 module.exports = {
     /**
      * Networks define how you connect to your ethereum client and let you set the
@@ -44,7 +44,7 @@ module.exports = {
         development: {
             host: "127.0.0.1",     // Localhost (default: none)
             port: 8545,            // Standard Ethereum port (default: none)
-            network_id: "*",       // Any network (default: none)
+            network_id: "*"       // Any network (default: none)
         },
         // Another network with more advanced options...
         // advanced: {
@@ -57,58 +57,42 @@ module.exports = {
         // },
 
         arbitrum: {
-            provider: function() {
-                return new HDWalletProvider(
-                    // throw-away seed for dev
-                    process.env.PRIVATE_KEY,
-                    `https://arbitrum-mainnet.infura.io/v3/28e5737b9034453d877f39dcf3f297b9`
-                );
-            },
+            provider: () => new HDWalletProvider(
+                // throw-away seed for dev
+                process.env.PRIVATE_KEY,
+                `https://arbitrum-mainnet.infura.io/v3/28e5737b9034453d877f39dcf3f297b9`
+            )
+            ,
             network_id: 42161,
             networkCheckTimeout: 1000000,
             timeoutBlocks: 200
         },
 
         arbitrum_rinkeby: {
-            provider: function() {
-                return new HDWalletProvider(
-                    // throw-away seed for dev
-                    'maid side truck wood tuition engine onion extra frozen garbage car eager',
-                    `https://arbitrum-rinkeby.infura.io/v3/28e5737b9034453d877f39dcf3f297b9`
-                );
-            },
+            provider: () => new HDWalletProvider(
+                // throw-away seed for dev
+                'maid side truck wood tuition engine onion extra frozen garbage car eager',
+                `https://arbitrum-rinkeby.infura.io/v3/28e5737b9034453d877f39dcf3f297b9`
+            )
+            ,
             network_id: 421611,
             networkCheckTimeout: 10000000,
             timeoutBlocks: 200
         },
-        // Useful for deploying to a public network.
-        // NB: It's important to wrap the provider as a function.
-        // ropsten: {
-        // provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/YOUR-PROJECT-ID`),
-        // network_id: 3,       // Ropsten's id
-        // gas: 5500000,        // Ropsten has a lower block limit than mainnet
-        // confirmations: 2,    // # of confs to wait between deployments. (default: 0)
-        // timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
-        // skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
-        // },
-        // Useful for private networks
-        // private: {
-        // provider: () => new HDWalletProvider(mnemonic, `https://network.io`),
-        // network_id: 2111,   // This network is yours, in the cloud.
-        // production: true    // Treats this network as if it was a public net. (default: false)
-        // }
+        arbitrum_goerli: {
+            provider: () => new HDWalletProvider(
+                // throw-away seed for dev
+                process.env.PRIVATE_KEY,
+                `https://arbitrum-goerli.infura.io/v3/${process.env.GOERLI_API_KEY}`
+            )
+            ,
+            network_id: 421613
+        }
     },
-
-    // Set default mocha options here, use special reporters etc.
-    mocha: {
-        // timeout: 100000
-    },
-
-    // Configure your compilers
     compilers: {
         solc: {
             version: "0.8.3",    // Fetch exact version from solc-bin (default: truffle's version)
-            docker: false,        // Use "0.5.1" you've installed locally with docker (default: false)
+            docker: false        // Use "0.5.1" you've installed locally with docker (default: false)
             // settings: {          // See the solidity docs for advice about optimization and evmVersion
             //  optimizer: {
             //    enabled: false,
@@ -117,15 +101,5 @@ module.exports = {
             //  evmVersion: "byzantium"
             // }
         }
-    },
-
-    // Truffle DB is currently disabled by default; to enable it, change enabled: false to enabled: true
-    //
-    // Note: if you migrated your contracts prior to enabling this field in your Truffle project and want
-    // those previously migrated contracts available in the .db directory, you will need to run the following:
-    // $ truffle migrate --reset --compile-all
-
-    db: {
-        enabled: false
     }
-};
+}
